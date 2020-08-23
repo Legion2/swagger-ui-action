@@ -1,6 +1,5 @@
 import * as core from '@actions/core';
 import {exec} from '@actions/exec';
-import {HttpClient} from '@actions/http-client';
 import * as io from '@actions/io';
 import {Octokit} from '@octokit/rest';
 import * as fs from 'fs';
@@ -15,8 +14,8 @@ async function run(): Promise<void> {
 
     const tempDir = 'swagger-ui-action-temp';
 
-    console.log('Configuration:', config);
-    console.log('Swagger UI version: ' + release.tag_name);
+    core.info(`Configuration:${config}`);
+    core.info(`Swagger UI version: ${release.tag_name}`);
 
     await io.mkdirP(tempDir);
     await io.mkdirP(config.outputPath);
@@ -67,7 +66,7 @@ async function downloadSwaggerUI(
     'favicon-16x16.png',
     'favicon-32x32.png'
   ];
-  await Promise.all(requiredFiles.map(file => io.mv(file, outputPath)));
+  await Promise.all(requiredFiles.map(async file => io.mv(file, outputPath)));
 }
 
 async function createIndexHtml(
@@ -75,21 +74,21 @@ async function createIndexHtml(
   swaggerConfig: string
 ): Promise<void> {
   const outputFile = join(outputPath, 'index.html');
-  await io.cp(__dirname + '/../resources/index.html', outputFile);
+  await io.cp(`${__dirname}/../resources/index.html`, outputFile);
   await exec('sed', ['-i', `s|<swaggerConfig>|${swaggerConfig}|`, outputFile]);
 }
 
 async function createSwaggerConfig(config: Config): Promise<string> {
   switch (config.configMode) {
     case 'swaggerConfigFile':
-      console.log('skip swagger config creation and use provided url');
+      core.info('skip swagger config creation and use provided url');
       io.cp(
         config.swaggerConfigFile,
         join(config.outputPath, 'swagger-config')
       );
       return 'swagger-config';
     case 'swaggerConfigUrl':
-      console.log('skip swagger config creation and use provided url');
+      core.info('skip swagger config creation and use provided url');
       return config.swaggerConfigUrl;
     case 'specFile':
       await io.cp(config.specFile, join(config.outputPath, 'spec'));
@@ -105,7 +104,7 @@ async function generateSwaggerConfig(
 ): Promise<string> {
   const swaggerUIConfig = JSON.parse(
     await fs.promises.readFile(
-      __dirname + '/../resources/swagger-config.json',
+      `${__dirname}/../resources/swagger-config.json`,
       {encoding: 'utf8'}
     )
   );
@@ -141,7 +140,7 @@ function validateConfig(): Config {
   };
 }
 
-function validateSwaggerUIConfig(
+export function validateSwaggerUIConfig(
   specFile: string,
   specUrl: string,
   swaggerConfigFile: string,
@@ -150,28 +149,28 @@ function validateSwaggerUIConfig(
   let configMode: ConfigMode | null = null;
   if (specFile) {
     if (configMode) {
-      invalidConfig(configMode, 'specFile');
+      invalidSwaggerUiConfig(configMode, 'specFile');
     } else {
       configMode = 'specFile';
     }
   }
   if (specUrl) {
     if (configMode) {
-      invalidConfig(configMode, 'specUrl');
+      invalidSwaggerUiConfig(configMode, 'specUrl');
     } else {
       configMode = 'specUrl';
     }
   }
   if (swaggerConfigFile) {
     if (configMode) {
-      invalidConfig(configMode, 'swaggerConfigFile');
+      invalidSwaggerUiConfig(configMode, 'swaggerConfigFile');
     } else {
       configMode = 'swaggerConfigFile';
     }
   }
   if (swaggerConfigUrl) {
     if (configMode) {
-      invalidConfig(configMode, 'swaggerConfigUrl');
+      invalidSwaggerUiConfig(configMode, 'swaggerConfigUrl');
     } else {
       configMode = 'swaggerConfigUrl';
     }
@@ -187,7 +186,7 @@ function validateSwaggerUIConfig(
   }
 }
 
-function invalidConfig(configMode: string, secondMode: string) {
+function invalidSwaggerUiConfig(configMode: string, secondMode: string): never {
   const message =
     'Only one configuration input can be used to configure swagger-ui with this action.' +
     `You specified "${configMode}" and "${secondMode}" at the same time!`;
@@ -204,8 +203,8 @@ async function getSwaggerUIRelease({
     repo: 'swagger-ui'
   });
   const matchingReleases = releases.data
-    .filter(x => x.prerelease != true)
-    .filter(x => x.draft != true)
+    .filter(x => x.prerelease !== true)
+    .filter(x => x.draft !== true)
     .filter(x => satisfies(x.tag_name, swaggerUIVersion));
   if (!matchingReleases.length) {
     const message = 'No valid Swagger UI releases found';

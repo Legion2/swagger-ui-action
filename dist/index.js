@@ -1781,6 +1781,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.validateSwaggerUIConfig = void 0;
 const core = __importStar(__webpack_require__(186));
 const exec_1 = __webpack_require__(514);
 const io = __importStar(__webpack_require__(436));
@@ -1794,8 +1795,8 @@ function run() {
             const config = validateConfig();
             const release = yield getSwaggerUIRelease(config);
             const tempDir = 'swagger-ui-action-temp';
-            console.log('Configuration:', config);
-            console.log('Swagger UI version: ' + release.tag_name);
+            core.info(`Configuration:${config}`);
+            core.info(`Swagger UI version: ${release.tag_name}`);
             yield io.mkdirP(tempDir);
             yield io.mkdirP(config.outputPath);
             yield downloadSwaggerUI(tempDir, release.tarball_url, config);
@@ -1840,7 +1841,7 @@ function downloadSwaggerUI(tempDir, url, { outputPath }) {
             'favicon-16x16.png',
             'favicon-32x32.png'
         ];
-        yield Promise.all(requiredFiles.map(file => io.mv(file, outputPath)));
+        yield Promise.all(requiredFiles.map((file) => __awaiter(this, void 0, void 0, function* () { return io.mv(file, outputPath); })));
     });
 }
 function createIndexHtml({ outputPath }, swaggerConfig) {
@@ -1854,11 +1855,11 @@ function createSwaggerConfig(config) {
     return __awaiter(this, void 0, void 0, function* () {
         switch (config.configMode) {
             case 'swaggerConfigFile':
-                console.log('skip swagger config creation and use provided url');
+                core.info('skip swagger config creation and use provided url');
                 io.cp(config.swaggerConfigFile, path_1.join(config.outputPath, 'swagger-config'));
                 return 'swagger-config';
             case 'swaggerConfigUrl':
-                console.log('skip swagger config creation and use provided url');
+                core.info('skip swagger config creation and use provided url');
                 return config.swaggerConfigUrl;
             case 'specFile':
                 yield io.cp(config.specFile, path_1.join(config.outputPath, 'spec'));
@@ -1897,7 +1898,7 @@ function validateSwaggerUIConfig(specFile, specUrl, swaggerConfigFile, swaggerCo
     let configMode = null;
     if (specFile) {
         if (configMode) {
-            invalidConfig(configMode, 'specFile');
+            invalidSwaggerUiConfig(configMode, 'specFile');
         }
         else {
             configMode = 'specFile';
@@ -1905,7 +1906,7 @@ function validateSwaggerUIConfig(specFile, specUrl, swaggerConfigFile, swaggerCo
     }
     if (specUrl) {
         if (configMode) {
-            invalidConfig(configMode, 'specUrl');
+            invalidSwaggerUiConfig(configMode, 'specUrl');
         }
         else {
             configMode = 'specUrl';
@@ -1913,7 +1914,7 @@ function validateSwaggerUIConfig(specFile, specUrl, swaggerConfigFile, swaggerCo
     }
     if (swaggerConfigFile) {
         if (configMode) {
-            invalidConfig(configMode, 'swaggerConfigFile');
+            invalidSwaggerUiConfig(configMode, 'swaggerConfigFile');
         }
         else {
             configMode = 'swaggerConfigFile';
@@ -1921,7 +1922,7 @@ function validateSwaggerUIConfig(specFile, specUrl, swaggerConfigFile, swaggerCo
     }
     if (swaggerConfigUrl) {
         if (configMode) {
-            invalidConfig(configMode, 'swaggerConfigUrl');
+            invalidSwaggerUiConfig(configMode, 'swaggerConfigUrl');
         }
         else {
             configMode = 'swaggerConfigUrl';
@@ -1936,7 +1937,8 @@ function validateSwaggerUIConfig(specFile, specUrl, swaggerConfigFile, swaggerCo
         return configMode;
     }
 }
-function invalidConfig(configMode, secondMode) {
+exports.validateSwaggerUIConfig = validateSwaggerUIConfig;
+function invalidSwaggerUiConfig(configMode, secondMode) {
     const message = 'Only one configuration input can be used to configure swagger-ui with this action.' +
         `You specified "${configMode}" and "${secondMode}" at the same time!`;
     core.setFailed(message);
@@ -1950,8 +1952,8 @@ function getSwaggerUIRelease({ swaggerUIVersion }) {
             repo: 'swagger-ui'
         });
         const matchingReleases = releases.data
-            .filter(x => x.prerelease != true)
-            .filter(x => x.draft != true)
+            .filter(x => x.prerelease !== true)
+            .filter(x => x.draft !== true)
             .filter(x => semver_1.satisfies(x.tag_name, swaggerUIVersion));
         if (!matchingReleases.length) {
             const message = 'No valid Swagger UI releases found';
