@@ -22,7 +22,7 @@ jobs:
       - uses: ./
         with:
           output: swagger-ui-output
-          url: https://petstore.swagger.io/v2/swagger.json
+          spec-url: https://petstore.swagger.io/v2/swagger.json
       - name: "Verify swagger-ui was created"
         run: |
           test -f swagger-ui-output/index.html

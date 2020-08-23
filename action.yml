@@ -9,14 +9,17 @@ inputs:
     description: 'Swagger UI version'
     required: true
     default: '^3.0.0'
-  specFile:
+  spec-file:
     description: 'A file containing the API definition'
     required: false
-  url:
-    description: 'A URL pointing to the API definition'
+  spec-url:
+    description: 'An URL pointing to the API definition'
     required: false
-  swagger-config:
+  swagger-config-file:
     description: 'A swagger-config file which is copied and added to configUrl'
+    required: false
+  swagger-config-url:
+    description: 'An URL to a swagger-config file which is added to configUrl'
     required: false
 runs:
   using: 'node12'
