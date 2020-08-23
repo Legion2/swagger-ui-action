@@ -21,4 +21,15 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ./
         with:
-          milliseconds: 1000
+          output: swagger-ui-output
+          url: https://petstore.swagger.io/v2/swagger.json
+      - name: "Verify swagger-ui was created"
+        run: |
+          test -f swagger-ui-output/index.html
+          test -f swagger-ui-output/swagger-config.json
+          test -f swagger-ui-output/swagger-ui-bundle.js
+      - name: Upload generated Swagger UI
+        uses: actions/upload-artifact@v2
+        with:
+          name: swagger-ui-output
+          path: swagger-ui-output

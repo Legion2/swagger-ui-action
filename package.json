@@ -1,8 +1,8 @@
 {
-  "name": "typescript-action",
-  "version": "0.0.0",
+  "name": "swagger-ui-action",
+  "version": "0.1.0",
   "private": true,
-  "description": "TypeScript template action",
+  "description": "Generate Swagger UI for API documentation",
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc",
@@ -15,17 +15,24 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/typescript-action.git"
+    "url": "git+https://github.com/Legion2/swagger-ui-action.git"
   },
   "keywords": [
     "actions",
     "node",
-    "setup"
+    "swagger-ui",
+    "openapi"
   ],
-  "author": "",
+  "author": "Leon Kiefer",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.2.4"
+    "@actions/core": "^1.2.4",
+    "@actions/exec": "^1.0.4",
+    "@actions/http-client": "^1.0.8",
+    "@actions/io": "^1.0.2",
+    "@octokit/rest": "^18.0.3",
+    "@types/semver": "^7.3.3",
+    "semver": "^7.3.2"
   },
   "devDependencies": {
     "@types/jest": "^26.0.10",
@@ -35,11 +42,11 @@
     "eslint": "^7.5.0",
     "eslint-plugin-github": "^4.1.1",
     "eslint-plugin-jest": "^23.20.0",
-    "jest": "^24.9.0",
+    "jest": "^26.4.2",
     "jest-circus": "^26.4.1",
     "js-yaml": "^3.14.0",
     "prettier": "2.0.5",
-    "ts-jest": "^24.3.0",
+    "ts-jest": "^26.2.0",
     "typescript": "^3.9.7"
   }
 }

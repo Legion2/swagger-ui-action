@@ -1,11 +1,23 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Swagger UI Action'
+description: 'Generate Swagger UI for API documentation'
+author: 'Leon Kiefer'
 inputs:
-  milliseconds: # change this
+  output:
+    description: 'Path of the generated Swagger UI files'
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+  version:
+    description: 'Swagger UI version'
+    required: true
+    default: '^3.0.0'
+  specFile:
+    description: 'A file containing the API definition'
+    required: false
+  url:
+    description: 'A URL pointing to the API definition'
+    required: false
+  swagger-config:
+    description: 'A swagger-config file which is copied and added to configUrl'
+    required: false
 runs:
   using: 'node12'
   main: 'dist/index.js'
