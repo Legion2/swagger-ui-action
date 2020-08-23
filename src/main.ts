@@ -51,9 +51,7 @@ async function downloadSwaggerUI(
   {outputPath}: Config
 ): Promise<void> {
   const swaggerUIArchivePath = join(tempDir, 'swagger-ui.tar.gz');
-  const swaggerUIArchive = fs.createWriteStream(swaggerUIArchivePath);
-  const httpClient = new HttpClient();
-  (await httpClient.get(url)).message.pipe(swaggerUIArchive);
+  await exec('curl', ['-o', swaggerUIArchivePath, url]);
   const basenameInArchive = await getBasenameInArchive(swaggerUIArchivePath);
   await exec('tar', [
     '-xzf',
