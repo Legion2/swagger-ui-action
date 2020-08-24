@@ -56,6 +56,8 @@ async function downloadSwaggerUI(
     '-xzf',
     swaggerUIArchivePath,
     '--strip-components=1',
+    '-C',
+    tempDir,
     join(basenameInArchive, 'dist')
   ]);
 
@@ -66,7 +68,11 @@ async function downloadSwaggerUI(
     'favicon-16x16.png',
     'favicon-32x32.png'
   ];
-  await Promise.all(requiredFiles.map(async file => io.mv(file, outputPath)));
+  await Promise.all(
+    requiredFiles.map(async file =>
+      io.mv(join(tempDir, 'dist', file), outputPath)
+    )
+  );
 }
 
 async function createIndexHtml(

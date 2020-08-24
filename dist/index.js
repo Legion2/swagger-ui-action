@@ -8153,6 +8153,8 @@ function downloadSwaggerUI(tempDir, url, { outputPath }) {
             '-xzf',
             swaggerUIArchivePath,
             '--strip-components=1',
+            '-C',
+            tempDir,
             path_1.join(basenameInArchive, 'dist')
         ]);
         const requiredFiles = [
@@ -8162,7 +8164,7 @@ function downloadSwaggerUI(tempDir, url, { outputPath }) {
             'favicon-16x16.png',
             'favicon-32x32.png'
         ];
-        yield Promise.all(requiredFiles.map((file) => __awaiter(this, void 0, void 0, function* () { return io.mv(file, outputPath); })));
+        yield Promise.all(requiredFiles.map((file) => __awaiter(this, void 0, void 0, function* () { return io.mv(path_1.join(tempDir, 'dist', file), outputPath); })));
     });
 }
 function createIndexHtml({ outputPath }, swaggerConfig) {
