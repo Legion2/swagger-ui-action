@@ -8195,7 +8195,7 @@ function createSwaggerConfig(config) {
 function generateSwaggerConfig(config, url) {
     return __awaiter(this, void 0, void 0, function* () {
         const swaggerUIConfig = JSON.parse(yield fs.promises.readFile(`${__dirname}/../resources/swagger-config.json`, { encoding: 'utf8' }));
-        yield fs.promises.writeFile(path_1.join(config.outputPath, 'swagger-config.json'), Object.assign(Object.assign({}, swaggerUIConfig), { url }));
+        yield fs.promises.writeFile(path_1.join(config.outputPath, 'swagger-config.json'), JSON.stringify(Object.assign(Object.assign({}, swaggerUIConfig), { url })));
         return 'swagger-config.json';
     });
 }

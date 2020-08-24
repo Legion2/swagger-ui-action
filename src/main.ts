@@ -114,10 +114,13 @@ async function generateSwaggerConfig(
       {encoding: 'utf8'}
     )
   );
-  await fs.promises.writeFile(join(config.outputPath, 'swagger-config.json'), {
-    ...swaggerUIConfig,
-    url
-  });
+  await fs.promises.writeFile(
+    join(config.outputPath, 'swagger-config.json'),
+    JSON.stringify({
+      ...swaggerUIConfig,
+      url
+    })
+  );
   return 'swagger-config.json';
 }
 
