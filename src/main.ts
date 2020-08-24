@@ -14,7 +14,7 @@ async function run(): Promise<void> {
 
     const tempDir = 'swagger-ui-action-temp';
 
-    core.info(`Configuration:${config}`);
+    core.info(`Configuration: ${JSON.stringify(config, null, 2)}`);
     core.info(`Swagger UI version: ${release.tag_name}`);
 
     await io.mkdirP(tempDir);
@@ -189,7 +189,7 @@ export function validateSwaggerUIConfig(
     const message =
       'You must specify a configuration input to configure swagger-ui. e.g. a url to a swagger spec or a swagger-config.yaml';
     core.setFailed(message);
-    throw message;
+    throw new Error(message);
   } else {
     return configMode;
   }
@@ -200,7 +200,7 @@ function invalidSwaggerUiConfig(configMode: string, secondMode: string): never {
     'Only one configuration input can be used to configure swagger-ui with this action.' +
     `You specified "${configMode}" and "${secondMode}" at the same time!`;
   core.setFailed(message);
-  throw message;
+  throw new Error(message);
 }
 
 async function getSwaggerUIRelease({
@@ -218,7 +218,7 @@ async function getSwaggerUIRelease({
   if (!matchingReleases.length) {
     const message = 'No valid Swagger UI releases found';
     core.setFailed(message);
-    throw message;
+    throw new Error(message);
   }
   return matchingReleases[0];
 }
