@@ -26,7 +26,7 @@
   "author": "Leon Kiefer",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.2.4",
+    "@actions/core": "^1.2.5",
     "@actions/exec": "^1.0.4",
     "@actions/http-client": "^1.0.8",
     "@actions/io": "^1.0.2",
