@@ -163,9 +163,11 @@ function createSwaggerConfig(config) {
             case 'swaggerConfigUrl':
                 core.info('skip swagger config creation and use provided url');
                 return config.swaggerConfigUrl;
-            case 'specFile':
-                yield io.cp(config.specFile, path_1.join(config.outputPath, 'spec'));
-                return yield generateSwaggerConfig(config, 'spec');
+            case 'specFile': {
+                const specPath = path_1.basename(config.specFile);
+                yield io.cp(config.specFile, path_1.join(config.outputPath, specPath));
+                return yield generateSwaggerConfig(config, specPath);
+            }
             case 'specUrl':
                 return yield generateSwaggerConfig(config, config.specUrl);
         }

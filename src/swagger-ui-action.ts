@@ -3,7 +3,7 @@ import {exec} from '@actions/exec';
 import * as io from '@actions/io';
 import {Octokit} from '@octokit/rest';
 import * as fs from 'fs';
-import {join} from 'path';
+import {join, basename} from 'path';
 import {satisfies} from 'semver';
 
 export async function getBasenameInArchive(archive: string): Promise<string> {
@@ -71,9 +71,11 @@ export async function createSwaggerConfig(config: Config): Promise<string> {
     case 'swaggerConfigUrl':
       core.info('skip swagger config creation and use provided url');
       return config.swaggerConfigUrl;
-    case 'specFile':
-      await io.cp(config.specFile, join(config.outputPath, 'spec'));
-      return await generateSwaggerConfig(config, 'spec');
+    case 'specFile': {
+      const specPath = basename(config.specFile);
+      await io.cp(config.specFile, join(config.outputPath, specPath));
+      return await generateSwaggerConfig(config, specPath);
+    }
     case 'specUrl':
       return await generateSwaggerConfig(config, config.specUrl);
   }
