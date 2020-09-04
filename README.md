@@ -22,18 +22,16 @@ Example steps from a workflow to generate and deploy Swagger UI to GitHub Pages:
 
 For a full example have a look at [this workflow file](https://github.com/Legion2/open-cue-service/blob/master/.github/workflows/pages.yml).
 
-## Publish to a distribution branch
+## Development
 
 Actions are run from GitHub repos so we will checkin the packed dist folder. 
 
-Then run [ncc](https://github.com/zeit/ncc) and push the results:
+Release a new version:
 ```bash
 $ npm run package
-$ git add dist
-$ git commit -a -m "prod dependencies"
+$ git commit -a -m "distribution"
+$ npm version major/minor/patch
 $ git push origin releases/v1
 ```
 
-Your action is now published! :rocket: 
-
-See the [versioning documentation](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
+[versioning documentation](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
