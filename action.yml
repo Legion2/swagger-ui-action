@@ -3,7 +3,7 @@ description: 'Generate Swagger UI for API documentation'
 author: 'Leon Kiefer'
 inputs:
   output:
-    description: 'Path of the generated Swagger UI files'
+    description: 'Output path for the generated Swagger UI files'
     required: true
   version:
     description: 'Swagger UI version'
