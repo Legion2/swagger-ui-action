@@ -31,7 +31,8 @@ Release a new version:
 $ npm run package
 $ git commit -a -m "distribution"
 $ npm version major/minor/patch
-$ git push origin releases/v1
+$ git tag -fa v1 -m "Update v1 tag"
+$ git push origin v1 --force
 ```
 
 [versioning documentation](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
