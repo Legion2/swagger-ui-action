@@ -200,7 +200,18 @@ export async function getSwaggerUIRelease({
     core.setFailed(message);
     throw new Error(message);
   }
-  return matchingReleases[0];
+  const release = matchingReleases[0];
+
+  if (release.tarball_url == null) {
+    const message = 'Swagger UI releases does not contain valid source url';
+    core.setFailed(message);
+    throw new Error(message);
+  }
+
+  return {
+    tag_name: release.tag_name,
+    tarball_url: release.tarball_url
+  };
 }
 
 export type ConfigMode =
