@@ -3,8 +3,22 @@ Generate Swagger UI static html files and configuration to be deployed to GitHub
 
 > This action only works on linux runners.
 ## How to Use
+This Action supports four different configuration modes:
+ * `spec-file`: File path to local OpenAPI or Swagger specification document
+ * `spec-url`: URL of an OpenAPI or Swagger specification document
+ * `swagger-config-file`: File path to local swagger configuration file
+ * `swagger-config-url`: URL of a swagger configuration file
 
-Have a look at [action.yml](action.yml) for a complete list of all supported input options.
+Use `spec-file` or `spec-url` when you have an OpenAPI or Swagger specification document and want a basic Swagger UI generated for it.
+If you want to customize the created Swagger UI, you should use the `swagger-config-file` or the `swagger-config-url` configuration modes.
+For information about the advanced swagger-config see the [Swagger UI Configuration documentation](https://swagger.io/docs/open-source-tools/swagger-ui/usage/configuration/).
+
+The output directory of the generated Swagger UI must be set with the `output` argument of the Action.
+Optionally the Swagger UI version can be set with the `version` input, it accepts semver ranges.
+
+### Example
+This Action only generates the Swagger UI.
+For example, to deploy it to GitHub Pages another Action is required.
 
 Example steps from a workflow to generate and deploy Swagger UI to GitHub Pages:
 ```yaml
@@ -24,7 +38,7 @@ For a full example have a look at [this workflow file](https://github.com/Legion
 
 ## Development
 
-Actions are run from GitHub repos so we will checkin the packed dist folder. 
+The Action runs from GitHub this repo, so the packed dist folder must be added to git. 
 
 Release a new version:
 ```bash
