@@ -30,7 +30,7 @@
     "@actions/exec": "^1.0.4",
     "@actions/http-client": "^1.0.9",
     "@actions/io": "^1.0.2",
-    "@octokit/rest": "^18.2.0",
+    "@octokit/rest": "^18.3.0",
     "semver": "^7.3.4"
   },
   "devDependencies": {
