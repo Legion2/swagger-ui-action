@@ -3,7 +3,7 @@
   "version": "1.0.3",
   "private": true,
   "description": "Generate Swagger UI for API documentation",
-  "main": "lib/main.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "format": "prettier --write **/*.ts",
