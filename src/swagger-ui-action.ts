@@ -107,7 +107,7 @@ export function validateConfig(): Config {
   const specFile = core.getInput('spec-file');
   const specUrl = core.getInput('spec-url');
   const swaggerConfigFile = core.getInput('swagger-config-file');
-  const swaggerConfigUrl = core.getInput('swagger-config-file');
+  const swaggerConfigUrl = core.getInput('swagger-config-url');
   const configMode = validateSwaggerUIConfig(
     specFile,
     specUrl,
