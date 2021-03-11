@@ -61,13 +61,15 @@ export async function createIndexHtml(
 
 export async function createSwaggerConfig(config: Config): Promise<string> {
   switch (config.configMode) {
-    case 'swaggerConfigFile':
-      core.info('skip swagger config creation and use provided url');
-      io.cp(
+    case 'swaggerConfigFile': {
+      core.info('skip swagger config creation and use provided file');
+      const swaggerConfigFileName = basename(config.swaggerConfigFile);
+      await io.cp(
         config.swaggerConfigFile,
-        join(config.outputPath, 'swagger-config')
+        join(config.outputPath, swaggerConfigFileName)
       );
-      return 'swagger-config';
+      return swaggerConfigFileName;
+    }
     case 'swaggerConfigUrl':
       core.info('skip swagger config creation and use provided url');
       return config.swaggerConfigUrl;

@@ -9082,10 +9082,12 @@ exports.createIndexHtml = createIndexHtml;
 function createSwaggerConfig(config) {
     return __awaiter(this, void 0, void 0, function* () {
         switch (config.configMode) {
-            case 'swaggerConfigFile':
-                core.info('skip swagger config creation and use provided url');
-                io.cp(config.swaggerConfigFile, path_1.join(config.outputPath, 'swagger-config'));
-                return 'swagger-config';
+            case 'swaggerConfigFile': {
+                core.info('skip swagger config creation and use provided file');
+                const swaggerConfigFileName = path_1.basename(config.swaggerConfigFile);
+                yield io.cp(config.swaggerConfigFile, path_1.join(config.outputPath, swaggerConfigFileName));
+                return swaggerConfigFileName;
+            }
             case 'swaggerConfigUrl':
                 core.info('skip swagger config creation and use provided url');
                 return config.swaggerConfigUrl;
