@@ -64,7 +64,7 @@ export async function createSwaggerConfig(config: Config): Promise<string> {
     case 'swaggerConfigFile': {
       core.info('skip swagger config creation and use provided file');
       const swaggerConfigFileName = basename(config.swaggerConfigFile);
-      io.cp(
+      await io.cp(
         config.swaggerConfigFile,
         join(config.outputPath, swaggerConfigFileName)
       );
