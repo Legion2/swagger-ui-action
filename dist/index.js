@@ -1,5 +1,4 @@
-require('./sourcemap-register.js');module.exports =
-/******/ (() => { // webpackBootstrap
+require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
 /***/ 7351:
@@ -3276,7 +3275,7 @@ const Endpoints = {
         previews: ["squirrel-girl"]
       }
     }, {
-      deprecated: "octokit.reactions.deleteLegacy() is deprecated, see https://docs.github.com/rest/reference/reactions/#delete-a-reaction-legacy"
+      deprecated: "octokit.rest.reactions.deleteLegacy() is deprecated, see https://docs.github.com/rest/reference/reactions/#delete-a-reaction-legacy"
     }],
     listForCommitComment: ["GET /repos/{owner}/{repo}/comments/{comment_id}/reactions", {
       mediaType: {
@@ -3343,7 +3342,7 @@ const Endpoints = {
     createDeploymentStatus: ["POST /repos/{owner}/{repo}/deployments/{deployment_id}/statuses"],
     createDispatchEvent: ["POST /repos/{owner}/{repo}/dispatches"],
     createForAuthenticatedUser: ["POST /user/repos"],
-    createFork: ["POST /repos/{owner}/{repo}/forks{?org,organization}"],
+    createFork: ["POST /repos/{owner}/{repo}/forks"],
     createInOrg: ["POST /orgs/{org}/repos"],
     createOrUpdateEnvironment: ["PUT /repos/{owner}/{repo}/environments/{environment_name}"],
     createOrUpdateFileContents: ["PUT /repos/{owner}/{repo}/contents/{path}"],
@@ -3653,7 +3652,7 @@ const Endpoints = {
   }
 };
 
-const VERSION = "5.0.0";
+const VERSION = "5.0.1";
 
 function endpointsToMethods(octokit, endpointsMap) {
   const newMethods = {};
@@ -3981,22 +3980,23 @@ exports.request = request;
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
+var __webpack_unused_export__;
 
 
-Object.defineProperty(exports, "__esModule", ({ value: true }));
+__webpack_unused_export__ = ({ value: true });
 
 var core = __nccwpck_require__(6762);
 var pluginRequestLog = __nccwpck_require__(8883);
 var pluginPaginateRest = __nccwpck_require__(4193);
 var pluginRestEndpointMethods = __nccwpck_require__(3044);
 
-const VERSION = "18.5.2";
+const VERSION = "18.5.3";
 
 const Octokit = core.Octokit.plugin(pluginRequestLog.requestLog, pluginRestEndpointMethods.legacyRestEndpointMethods, pluginPaginateRest.paginateRest).defaults({
   userAgent: `octokit-rest.js/${VERSION}`
 });
 
-exports.Octokit = Octokit;
+exports.v = Octokit;
 //# sourceMappingURL=index.js.map
 
 
@@ -9085,291 +9085,6 @@ try {
 
 /***/ }),
 
-/***/ 399:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
-
-"use strict";
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-const core = __importStar(__nccwpck_require__(2186));
-const io = __importStar(__nccwpck_require__(7436));
-const swagger_ui_action_1 = __nccwpck_require__(9695);
-function run() {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            const config = swagger_ui_action_1.validateConfig();
-            const release = yield swagger_ui_action_1.getSwaggerUIRelease(config);
-            const tempDir = 'swagger-ui-action-temp';
-            core.info(`Configuration: ${JSON.stringify(config, null, 2)}`);
-            core.info(`Swagger UI version: ${release.tag_name}`);
-            yield io.mkdirP(tempDir);
-            yield io.mkdirP(config.outputPath);
-            yield swagger_ui_action_1.downloadSwaggerUI(tempDir, release.tarball_url, config);
-            const swaggerConfig = yield swagger_ui_action_1.createSwaggerConfig(config);
-            yield swagger_ui_action_1.createIndexHtml(config, swaggerConfig);
-            yield io.rmRF(tempDir);
-        }
-        catch (error) {
-            core.setFailed(error.message);
-        }
-    });
-}
-run();
-
-
-/***/ }),
-
-/***/ 9695:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
-
-"use strict";
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getSwaggerUIRelease = exports.invalidSwaggerUiConfig = exports.validateSwaggerUIConfig = exports.validateConfig = exports.generateSwaggerConfig = exports.createSwaggerConfig = exports.createIndexHtml = exports.downloadSwaggerUI = exports.getBasenameInArchive = void 0;
-const core = __importStar(__nccwpck_require__(2186));
-const exec_1 = __nccwpck_require__(1514);
-const io = __importStar(__nccwpck_require__(7436));
-const rest_1 = __nccwpck_require__(5375);
-const fs = __importStar(__nccwpck_require__(5747));
-const path_1 = __nccwpck_require__(5622);
-const semver_1 = __nccwpck_require__(1383);
-function getBasenameInArchive(archive) {
-    return __awaiter(this, void 0, void 0, function* () {
-        let filesList = '';
-        const options = {
-            listeners: {
-                stdout: (data) => {
-                    filesList += data.toString();
-                }
-            }
-        };
-        yield exec_1.exec('tar', ['-tzf', archive], options);
-        return filesList.split('\n')[0];
-    });
-}
-exports.getBasenameInArchive = getBasenameInArchive;
-function downloadSwaggerUI(tempDir, url, { outputPath }) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const swaggerUIArchivePath = path_1.join(tempDir, 'swagger-ui.tar.gz');
-        yield exec_1.exec('curl', ['-L', '-o', swaggerUIArchivePath, url]);
-        const basenameInArchive = yield getBasenameInArchive(swaggerUIArchivePath);
-        yield exec_1.exec('tar', [
-            '-xzf',
-            swaggerUIArchivePath,
-            '--strip-components=1',
-            '-C',
-            tempDir,
-            path_1.join(basenameInArchive, 'dist')
-        ]);
-        const requiredFiles = [
-            'swagger-ui-bundle.js',
-            'swagger-ui-standalone-preset.js',
-            'swagger-ui.css',
-            'favicon-16x16.png',
-            'favicon-32x32.png'
-        ];
-        yield Promise.all(requiredFiles.map((file) => __awaiter(this, void 0, void 0, function* () { return io.mv(path_1.join(tempDir, 'dist', file), outputPath); })));
-    });
-}
-exports.downloadSwaggerUI = downloadSwaggerUI;
-function createIndexHtml({ outputPath }, swaggerConfig) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const outputFile = path_1.join(outputPath, 'index.html');
-        yield io.cp(__nccwpck_require__.ab + "index.html", outputFile);
-        yield exec_1.exec('sed', ['-i', `s|<swaggerConfig>|${swaggerConfig}|`, outputFile]);
-    });
-}
-exports.createIndexHtml = createIndexHtml;
-function createSwaggerConfig(config) {
-    return __awaiter(this, void 0, void 0, function* () {
-        switch (config.configMode) {
-            case 'swaggerConfigFile': {
-                core.info('skip swagger config creation and use provided file');
-                const swaggerConfigFileName = path_1.basename(config.swaggerConfigFile);
-                yield io.cp(config.swaggerConfigFile, path_1.join(config.outputPath, swaggerConfigFileName));
-                return swaggerConfigFileName;
-            }
-            case 'swaggerConfigUrl':
-                core.info('skip swagger config creation and use provided url');
-                return config.swaggerConfigUrl;
-            case 'specFile': {
-                const specPath = path_1.basename(config.specFile);
-                yield io.cp(config.specFile, path_1.join(config.outputPath, specPath));
-                return yield generateSwaggerConfig(config, specPath);
-            }
-            case 'specUrl':
-                return yield generateSwaggerConfig(config, config.specUrl);
-        }
-    });
-}
-exports.createSwaggerConfig = createSwaggerConfig;
-function generateSwaggerConfig(config, url) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const swaggerUIConfig = JSON.parse(yield fs.promises.readFile(__nccwpck_require__.ab + "swagger-config.json", { encoding: 'utf8' }));
-        yield fs.promises.writeFile(path_1.join(config.outputPath, 'swagger-config.json'), JSON.stringify(Object.assign(Object.assign({}, swaggerUIConfig), { url })));
-        return 'swagger-config.json';
-    });
-}
-exports.generateSwaggerConfig = generateSwaggerConfig;
-function validateConfig() {
-    const outputPath = core.getInput('output');
-    const swaggerUIVersion = core.getInput('version');
-    const specFile = core.getInput('spec-file');
-    const specUrl = core.getInput('spec-url');
-    const swaggerConfigFile = core.getInput('swagger-config-file');
-    const swaggerConfigUrl = core.getInput('swagger-config-url');
-    const configMode = validateSwaggerUIConfig(specFile, specUrl, swaggerConfigFile, swaggerConfigUrl);
-    return {
-        configMode,
-        specFile,
-        specUrl,
-        swaggerConfigFile,
-        swaggerConfigUrl,
-        swaggerUIVersion,
-        outputPath
-    };
-}
-exports.validateConfig = validateConfig;
-function validateSwaggerUIConfig(specFile, specUrl, swaggerConfigFile, swaggerConfigUrl) {
-    let configMode = null;
-    if (specFile) {
-        if (configMode) {
-            invalidSwaggerUiConfig(configMode, 'specFile');
-        }
-        else {
-            configMode = 'specFile';
-        }
-    }
-    if (specUrl) {
-        if (configMode) {
-            invalidSwaggerUiConfig(configMode, 'specUrl');
-        }
-        else {
-            configMode = 'specUrl';
-        }
-    }
-    if (swaggerConfigFile) {
-        if (configMode) {
-            invalidSwaggerUiConfig(configMode, 'swaggerConfigFile');
-        }
-        else {
-            configMode = 'swaggerConfigFile';
-        }
-    }
-    if (swaggerConfigUrl) {
-        if (configMode) {
-            invalidSwaggerUiConfig(configMode, 'swaggerConfigUrl');
-        }
-        else {
-            configMode = 'swaggerConfigUrl';
-        }
-    }
-    if (!configMode) {
-        const message = 'You must specify a configuration input to configure swagger-ui. e.g. a url to a swagger spec or a swagger-config.yaml';
-        core.setFailed(message);
-        throw new Error(message);
-    }
-    else {
-        return configMode;
-    }
-}
-exports.validateSwaggerUIConfig = validateSwaggerUIConfig;
-function invalidSwaggerUiConfig(configMode, secondMode) {
-    const message = 'Only one configuration input can be used to configure swagger-ui with this action.' +
-        `You specified "${configMode}" and "${secondMode}" at the same time!`;
-    core.setFailed(message);
-    throw new Error(message);
-}
-exports.invalidSwaggerUiConfig = invalidSwaggerUiConfig;
-function getSwaggerUIRelease({ swaggerUIVersion }) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const octokit = new rest_1.Octokit();
-        const releases = yield octokit.repos.listReleases({
-            owner: 'swagger-api',
-            repo: 'swagger-ui'
-        });
-        const matchingReleases = releases.data
-            .filter(x => x.prerelease !== true)
-            .filter(x => x.draft !== true)
-            .filter(x => semver_1.satisfies(x.tag_name, swaggerUIVersion));
-        if (!matchingReleases.length) {
-            const message = 'No valid Swagger UI releases found';
-            core.setFailed(message);
-            throw new Error(message);
-        }
-        const release = matchingReleases[0];
-        if (release.tarball_url == null) {
-            const message = 'Swagger UI releases does not contain valid source url';
-            core.setFailed(message);
-            throw new Error(message);
-        }
-        return {
-            tag_name: release.tag_name,
-            tarball_url: release.tarball_url
-        };
-    });
-}
-exports.getSwaggerUIRelease = getSwaggerUIRelease;
-
-
-/***/ }),
-
 /***/ 2877:
 /***/ ((module) => {
 
@@ -9482,8 +9197,9 @@ module.exports = require("zlib");;
 /******/ 	// The require function
 /******/ 	function __nccwpck_require__(moduleId) {
 /******/ 		// Check if module is in cache
-/******/ 		if(__webpack_module_cache__[moduleId]) {
-/******/ 			return __webpack_module_cache__[moduleId].exports;
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
 /******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = __webpack_module_cache__[moduleId] = {
@@ -9506,13 +9222,265 @@ module.exports = require("zlib");;
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__nccwpck_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/compat */
 /******/ 	
-/******/ 	__nccwpck_require__.ab = __dirname + "/";/************************************************************************/
-/******/ 	// module exports must be returned from runtime so entry inlining is disabled
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	return __nccwpck_require__(399);
+/******/ 	if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = __dirname + "/";/************************************************************************/
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+(() => {
+"use strict";
+// ESM COMPAT FLAG
+__nccwpck_require__.r(__webpack_exports__);
+
+// EXTERNAL MODULE: ./node_modules/@actions/core/lib/core.js
+var core = __nccwpck_require__(2186);
+// EXTERNAL MODULE: ./node_modules/@actions/io/lib/io.js
+var io = __nccwpck_require__(7436);
+// EXTERNAL MODULE: ./node_modules/@actions/exec/lib/exec.js
+var exec = __nccwpck_require__(1514);
+// EXTERNAL MODULE: ./node_modules/@octokit/rest/dist-node/index.js
+var dist_node = __nccwpck_require__(5375);
+// EXTERNAL MODULE: external "fs"
+var external_fs_ = __nccwpck_require__(5747);
+// EXTERNAL MODULE: external "path"
+var external_path_ = __nccwpck_require__(5622);
+// EXTERNAL MODULE: ./node_modules/semver/index.js
+var semver = __nccwpck_require__(1383);
+;// CONCATENATED MODULE: ./src/swagger-ui-action.ts
+var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+
+
+
+
+
+
+
+function getBasenameInArchive(archive) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let filesList = '';
+        const options = {
+            listeners: {
+                stdout: (data) => {
+                    filesList += data.toString();
+                }
+            }
+        };
+        yield (0,exec.exec)('tar', ['-tzf', archive], options);
+        return filesList.split('\n')[0];
+    });
+}
+function downloadSwaggerUI(tempDir, url, { outputPath }) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const swaggerUIArchivePath = (0,external_path_.join)(tempDir, 'swagger-ui.tar.gz');
+        yield (0,exec.exec)('curl', ['-L', '-o', swaggerUIArchivePath, url]);
+        const basenameInArchive = yield getBasenameInArchive(swaggerUIArchivePath);
+        yield (0,exec.exec)('tar', [
+            '-xzf',
+            swaggerUIArchivePath,
+            '--strip-components=1',
+            '-C',
+            tempDir,
+            (0,external_path_.join)(basenameInArchive, 'dist')
+        ]);
+        const requiredFiles = [
+            'swagger-ui-bundle.js',
+            'swagger-ui-standalone-preset.js',
+            'swagger-ui.css',
+            'favicon-16x16.png',
+            'favicon-32x32.png'
+        ];
+        yield Promise.all(requiredFiles.map((file) => __awaiter(this, void 0, void 0, function* () { return io.mv((0,external_path_.join)(tempDir, 'dist', file), outputPath); })));
+    });
+}
+function createIndexHtml({ outputPath }, swaggerConfig) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const outputFile = (0,external_path_.join)(outputPath, 'index.html');
+        yield io.cp(__nccwpck_require__.ab + "index.html", outputFile);
+        yield (0,exec.exec)('sed', ['-i', `s|<swaggerConfig>|${swaggerConfig}|`, outputFile]);
+    });
+}
+function createSwaggerConfig(config) {
+    return __awaiter(this, void 0, void 0, function* () {
+        switch (config.configMode) {
+            case 'swaggerConfigFile': {
+                core.info('skip swagger config creation and use provided file');
+                const swaggerConfigFileName = (0,external_path_.basename)(config.swaggerConfigFile);
+                yield io.cp(config.swaggerConfigFile, (0,external_path_.join)(config.outputPath, swaggerConfigFileName));
+                return swaggerConfigFileName;
+            }
+            case 'swaggerConfigUrl':
+                core.info('skip swagger config creation and use provided url');
+                return config.swaggerConfigUrl;
+            case 'specFile': {
+                const specPath = (0,external_path_.basename)(config.specFile);
+                yield io.cp(config.specFile, (0,external_path_.join)(config.outputPath, specPath));
+                return yield generateSwaggerConfig(config, specPath);
+            }
+            case 'specUrl':
+                return yield generateSwaggerConfig(config, config.specUrl);
+        }
+    });
+}
+function generateSwaggerConfig(config, url) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const swaggerUIConfig = JSON.parse(yield external_fs_.promises.readFile(__nccwpck_require__.ab + "swagger-config.json", { encoding: 'utf8' }));
+        yield external_fs_.promises.writeFile((0,external_path_.join)(config.outputPath, 'swagger-config.json'), JSON.stringify(Object.assign(Object.assign({}, swaggerUIConfig), { url })));
+        return 'swagger-config.json';
+    });
+}
+function validateConfig() {
+    const outputPath = core.getInput('output');
+    const swaggerUIVersion = core.getInput('version');
+    const specFile = core.getInput('spec-file');
+    const specUrl = core.getInput('spec-url');
+    const swaggerConfigFile = core.getInput('swagger-config-file');
+    const swaggerConfigUrl = core.getInput('swagger-config-url');
+    const configMode = validateSwaggerUIConfig(specFile, specUrl, swaggerConfigFile, swaggerConfigUrl);
+    return {
+        configMode,
+        specFile,
+        specUrl,
+        swaggerConfigFile,
+        swaggerConfigUrl,
+        swaggerUIVersion,
+        outputPath
+    };
+}
+function validateSwaggerUIConfig(specFile, specUrl, swaggerConfigFile, swaggerConfigUrl) {
+    let configMode = null;
+    if (specFile) {
+        if (configMode) {
+            invalidSwaggerUiConfig(configMode, 'specFile');
+        }
+        else {
+            configMode = 'specFile';
+        }
+    }
+    if (specUrl) {
+        if (configMode) {
+            invalidSwaggerUiConfig(configMode, 'specUrl');
+        }
+        else {
+            configMode = 'specUrl';
+        }
+    }
+    if (swaggerConfigFile) {
+        if (configMode) {
+            invalidSwaggerUiConfig(configMode, 'swaggerConfigFile');
+        }
+        else {
+            configMode = 'swaggerConfigFile';
+        }
+    }
+    if (swaggerConfigUrl) {
+        if (configMode) {
+            invalidSwaggerUiConfig(configMode, 'swaggerConfigUrl');
+        }
+        else {
+            configMode = 'swaggerConfigUrl';
+        }
+    }
+    if (!configMode) {
+        const message = 'You must specify a configuration input to configure swagger-ui. e.g. a url to a swagger spec or a swagger-config.yaml';
+        core.setFailed(message);
+        throw new Error(message);
+    }
+    else {
+        return configMode;
+    }
+}
+function invalidSwaggerUiConfig(configMode, secondMode) {
+    const message = 'Only one configuration input can be used to configure swagger-ui with this action.' +
+        `You specified "${configMode}" and "${secondMode}" at the same time!`;
+    core.setFailed(message);
+    throw new Error(message);
+}
+function getSwaggerUIRelease({ swaggerUIVersion }) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const octokit = new dist_node/* Octokit */.v();
+        const releases = yield octokit.repos.listReleases({
+            owner: 'swagger-api',
+            repo: 'swagger-ui'
+        });
+        const matchingReleases = releases.data
+            .filter(x => x.prerelease !== true)
+            .filter(x => x.draft !== true)
+            .filter(x => (0,semver.satisfies)(x.tag_name, swaggerUIVersion));
+        if (!matchingReleases.length) {
+            const message = 'No valid Swagger UI releases found';
+            core.setFailed(message);
+            throw new Error(message);
+        }
+        const release = matchingReleases[0];
+        if (release.tarball_url == null) {
+            const message = 'Swagger UI releases does not contain valid source url';
+            core.setFailed(message);
+            throw new Error(message);
+        }
+        return {
+            tag_name: release.tag_name,
+            tarball_url: release.tarball_url
+        };
+    });
+}
+
+;// CONCATENATED MODULE: ./src/main.ts
+var main_awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+
+
+
+function run() {
+    return main_awaiter(this, void 0, void 0, function* () {
+        try {
+            const config = validateConfig();
+            const release = yield getSwaggerUIRelease(config);
+            const tempDir = 'swagger-ui-action-temp';
+            core.info(`Configuration: ${JSON.stringify(config, null, 2)}`);
+            core.info(`Swagger UI version: ${release.tag_name}`);
+            yield io.mkdirP(tempDir);
+            yield io.mkdirP(config.outputPath);
+            yield downloadSwaggerUI(tempDir, release.tarball_url, config);
+            const swaggerConfig = yield createSwaggerConfig(config);
+            yield createIndexHtml(config, swaggerConfig);
+            yield io.rmRF(tempDir);
+        }
+        catch (error) {
+            core.setFailed(error.message);
+        }
+    });
+}
+run();
+
+})();
+
+module.exports = __webpack_exports__;
 /******/ })()
 ;
 //# sourceMappingURL=index.js.map
