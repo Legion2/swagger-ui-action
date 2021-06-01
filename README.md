@@ -13,6 +13,9 @@ Use `spec-file` or `spec-url` when you have an OpenAPI or Swagger specification 
 If you want to customize the created Swagger UI, you should use the `swagger-config-file` or the `swagger-config-url` configuration modes.
 For information about the advanced swagger-config see the [Swagger UI Configuration documentation](https://swagger.io/docs/open-source-tools/swagger-ui/usage/configuration/).
 
+Note that, if `swagger-config-file` or `swagger-config-url` are used, no files specified in the `swagger-config.yaml` are copied by this action.
+In this case, it is your responsibility to copy required files such as the OpenAPI document where you need them (output directory).
+
 The output directory of the generated Swagger UI must be set with the `output` argument of the Action.
 Optionally the Swagger UI version can be set with the `version` input, it accepts semver ranges.
 
