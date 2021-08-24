@@ -1,9 +1,9 @@
 import * as core from '@actions/core';
-import {exec} from '@actions/exec';
-import * as io from '@actions/io';
-import {Octokit} from '@octokit/rest';
 import * as fs from 'fs';
-import {join, basename} from 'path';
+import * as io from '@actions/io';
+import {basename, join} from 'path';
+import {Octokit} from '@octokit/rest';
+import {exec} from '@actions/exec';
 import {satisfies} from 'semver';
 
 export async function getBasenameInArchive(archive: string): Promise<string> {
