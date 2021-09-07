@@ -29,7 +29,7 @@ async function run(): Promise<void> {
 
     await io.rmRF(tempDir);
   } catch (error) {
-    core.setFailed(error.message);
+    core.setFailed(error as Error);
   }
 }
 
