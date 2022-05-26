@@ -47,6 +47,7 @@ Release a new version:
 ```bash
 $ npm run package
 $ git commit -a -m "distribution"
+$ git push
 $ npm version major/minor/patch
 $ git tag -fa v1 -m "Update v1 tag"
 $ git push origin v1 --force
