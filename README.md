@@ -47,10 +47,12 @@ Release a new version:
 ```bash
 $ npm run package
 $ git commit -a -m "distribution"
-$ git push
 $ npm version major/minor/patch
+$ git push
 $ git tag -fa v1 -m "Update v1 tag"
 $ git push origin v1 --force
 ```
+
+Then create a release on GitHub.
 
 [versioning documentation](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
