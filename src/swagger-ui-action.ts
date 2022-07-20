@@ -200,11 +200,10 @@ export async function getSwaggerUIRelease({
         .filter(x => x.prerelease !== true)
         .filter(x => x.draft !== true)
         .filter(x => satisfies(x.tag_name, swaggerUIVersion));
-      if (matchingReleases.length) {
+      if (matchingReleases.length > 0) {
         done();
-        return matchingReleases;
       }
-      return [];
+      return matchingReleases;
     }
   );
 
