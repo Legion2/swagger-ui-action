@@ -1,6 +1,6 @@
 {
   "name": "swagger-ui-action",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "private": true,
   "description": "Generate Swagger UI for API documentation",
   "main": "dist/index.js",
@@ -26,7 +26,7 @@
   "author": "Leon Kiefer",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.8.2",
+    "@actions/core": "^1.9.0",
     "@actions/exec": "^1.1.1",
     "@actions/http-client": "^2.0.1",
     "@actions/io": "^1.1.2",
@@ -41,7 +41,7 @@
     "@vercel/ncc": "^0.34.0",
     "eslint": "^8.20.0",
     "eslint-plugin-github": "^4.3.6",
-    "eslint-plugin-jest": "^26.4.6",
+    "eslint-plugin-jest": "^26.6.0",
     "jest": "^27.5.1",
     "jest-circus": "^27.5.1",
     "js-yaml": "^4.1.0",
