@@ -13173,20 +13173,25 @@ exports.invalidSwaggerUiConfig = invalidSwaggerUiConfig;
 function getSwaggerUIRelease({ swaggerUIVersion }) {
     return __awaiter(this, void 0, void 0, function* () {
         const octokit = new rest_1.Octokit();
-        const releases = yield octokit.repos.listReleases({
+        const foundReleases = yield octokit.paginate(octokit.rest.repos.listReleases, {
             owner: 'swagger-api',
             repo: 'swagger-ui'
+        }, (releases, done) => {
+            const matchingReleases = releases.data
+                .filter(x => x.prerelease !== true)
+                .filter(x => x.draft !== true)
+                .filter(x => (0, semver_1.satisfies)(x.tag_name, swaggerUIVersion));
+            if (matchingReleases.length > 0) {
+                done();
+            }
+            return matchingReleases;
         });
-        const matchingReleases = releases.data
-            .filter(x => x.prerelease !== true)
-            .filter(x => x.draft !== true)
-            .filter(x => (0, semver_1.satisfies)(x.tag_name, swaggerUIVersion));
-        if (!matchingReleases.length) {
+        if (!foundReleases.length) {
             const message = 'No valid Swagger UI releases found';
             core.setFailed(message);
             throw new Error(message);
         }
-        const release = matchingReleases[0];
+        const release = foundReleases[0];
         if (release.tarball_url == null) {
             const message = 'Swagger UI releases does not contain valid source url';
             core.setFailed(message);
