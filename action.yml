@@ -22,7 +22,7 @@ inputs:
     description: 'An URL to a swagger-config file which is added to configUrl'
     required: false
 runs:
-  using: 'node12'
+  using: 'node16'
   main: 'dist/index.js'
 branding:
   icon: book-open
