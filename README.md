@@ -19,6 +19,8 @@ In this case, it is your responsibility to copy required files such as the OpenA
 The output directory of the generated Swagger UI must be set with the `output` argument of the Action.
 Optionally the Swagger UI version can be set with the `version` input, it accepts semver ranges.
 
+The `GITHUB_TOKEN` secret must be provided to the action. It is used to query the Github api and download the release files of Swagger UI.
+
 ### Example
 This Action only generates the Swagger UI.
 For example, to deploy it to GitHub Pages another Action is required.
@@ -30,6 +32,7 @@ Example steps from a workflow to generate and deploy Swagger UI to GitHub Pages:
         with:
           output: swagger-ui
           spec-file: openapi.json
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:

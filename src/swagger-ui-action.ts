@@ -5,6 +5,7 @@ import {basename, join} from 'path';
 import {Octokit} from '@octokit/rest';
 import {exec} from '@actions/exec';
 import {satisfies} from 'semver';
+import {createActionAuth} from '@octokit/auth-action';
 
 export async function getBasenameInArchive(archive: string): Promise<string> {
   let filesList = '';
@@ -188,7 +189,9 @@ export function invalidSwaggerUiConfig(
 export async function getSwaggerUIRelease({
   swaggerUIVersion
 }: Config): Promise<{tag_name: string; tarball_url: string}> {
-  const octokit = new Octokit();
+  const octokit = new Octokit({
+    authStrategy: createActionAuth
+  });
   const foundReleases = await octokit.paginate(
     octokit.rest.repos.listReleases,
     {
