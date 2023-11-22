@@ -21,6 +21,9 @@ inputs:
   swagger-config-url:
     description: 'An URL to a swagger-config file which is added to configUrl'
     required: false
+  GITHUB_TOKEN:
+    description: 'The GitHub token to use for querying and downloading the swagger release'
+    required: false
 runs:
   using: 'node20'
   main: 'dist/index.js'
