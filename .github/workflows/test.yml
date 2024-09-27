@@ -10,7 +10,7 @@ jobs:
   build: # make sure build/ci work properly
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - run: |
           npm install
       - run: |
@@ -20,7 +20,7 @@ jobs:
   test: # make sure the action works on a clean machine without building
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: ./
         with:
           output: swagger-ui-output
@@ -32,7 +32,7 @@ jobs:
           test -f swagger-ui-output/swagger-config.json
           test -f swagger-ui-output/swagger-ui-bundle.js
       - name: Upload generated Swagger UI
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: swagger-ui-output
           path: swagger-ui-output
