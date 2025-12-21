@@ -1,13 +1,17 @@
 # Swagger UI Action [![build-test](https://github.com/Legion2/swagger-ui-action/workflows/build-test/badge.svg)](https://github.com/Legion2/swagger-ui-action/actions?query=workflow%3Abuild-test+branch%3Amain)
+
 Generate Swagger UI static html files and configuration to be deployed to GitHub Pages.
 
 > This action only works on linux runners.
+
 ## How to Use
+
 This Action supports four different configuration modes:
- * `spec-file`: File path to local OpenAPI or Swagger specification document
- * `spec-url`: URL of an OpenAPI or Swagger specification document
- * `swagger-config-file`: File path to local swagger configuration file
- * `swagger-config-url`: URL of a swagger configuration file
+
+- `spec-file`: File path to local OpenAPI or Swagger specification document
+- `spec-url`: URL of an OpenAPI or Swagger specification document
+- `swagger-config-file`: File path to local swagger configuration file
+- `swagger-config-url`: URL of a swagger configuration file
 
 Use `spec-file` or `spec-url` when you have an OpenAPI or Swagger specification document and want a basic Swagger UI generated for it.
 If you want to customize the created Swagger UI, you should use the `swagger-config-file` or the `swagger-config-url` configuration modes.
@@ -17,36 +21,46 @@ Note that, if `swagger-config-file` or `swagger-config-url` are used, no files s
 In this case, it is your responsibility to copy required files such as the OpenAPI document where you need them (output directory).
 
 The output directory of the generated Swagger UI must be set with the `output` argument of the Action.
-Optionally the Swagger UI version can be set with the `version` input, it accepts semver ranges.
+
+### Version Input
+
+The `version` input controls which version of Swagger UI is used to generate the documentation.
+It accepts [semver ranges](https://docs.npmjs.com/cli/v6/using-npm/semver#ranges), allowing you to specify exact versions (e.g., `5.0.0`), major versions (e.g., `5.x`), or ranges (e.g., `^3.0.0`).
+If not specified, it defaults to `^3.0.0`.
+Using version ranges ensures you automatically get the latest compatible version without manually updating your workflow.
 
 The `GITHUB_TOKEN` secret must be provided to the action. It is used to query the Github api and download the release files of Swagger UI.
 
 ### Example
+
 This Action only generates the Swagger UI.
 For example, to deploy it to GitHub Pages another Action is required.
 
 Example steps from a workflow to generate and deploy Swagger UI to GitHub Pages:
+
 ```yaml
-      - name: Generate Swagger UI
-        uses: Legion2/swagger-ui-action@v1
-        with:
-          output: swagger-ui
-          spec-file: openapi.json
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: swagger-ui
+- name: Generate Swagger UI
+  uses: Legion2/swagger-ui-action@v1
+  with:
+    output: swagger-ui
+    spec-file: openapi.json
+    version: 5.x
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+- name: Deploy to GitHub Pages
+  uses: peaceiris/actions-gh-pages@v3
+  with:
+    github_token: ${{ secrets.GITHUB_TOKEN }}
+    publish_dir: swagger-ui
 ```
 
 For a full example have a look at [this workflow file](https://github.com/Legion2/open-cue-service/blob/master/.github/workflows/pages.yml).
 
 ## Development
 
-The Action runs from GitHub this repo, so the packed dist folder must be added to git. 
+The Action runs from GitHub this repo, so the packed dist folder must be added to git.
 
 Release a new version:
+
 ```bash
 $ npm run package
 $ git commit -a -m "distribution"
