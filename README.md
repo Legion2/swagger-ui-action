@@ -25,7 +25,7 @@ The output directory of the generated Swagger UI must be set with the `output` a
 ### Version Input
 
 The `version` input controls which version of Swagger UI is used to generate the documentation.
-It accepts [semver ranges](https://semver.org/), allowing you to specify exact versions (e.g., `5.0.0`), major versions (e.g., `5.x`), or ranges (e.g., `^3.0.0`).
+It accepts [semver ranges](https://docs.npmjs.com/cli/v6/using-npm/semver#ranges), allowing you to specify exact versions (e.g., `5.0.0`), major versions (e.g., `5.x`), or ranges (e.g., `^3.0.0`).
 If not specified, it defaults to `^3.0.0`.
 Using version ranges ensures you automatically get the latest compatible version without manually updating your workflow.
 
